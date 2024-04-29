@@ -38,22 +38,20 @@ def task1_c(bits):
     # create the message dictionary
     messages = {}
     # generate hash for each message in the dictionary
-    for j in range(0, (2 ** bits) // 8):
+    for j in range(0, (2 ** bits) // 6):
         # calculate the hash for str(j)
         hash_bits = c_helper(str(j), bits)
-        messages[str(j)] = hash_bits
-        for key in messages.keys():
-            # check to see if the same hash has been found for another value
-            if messages[key] == hash_bits and key != str(j):
-                # found a match!
-                end_time = time.time()
-                print("m0: " + key)
-                print("m1: " + str(j))
-                print("hash0: " + str(messages[key]))
-                print("hash1: " + str(messages[str(j)]))
-                print("COLLISION FOUND!")
-                print("Elapsed time: " + str(end_time - start_time) + " seconds\n")
-                return
+        if str(hash_bits) in messages:
+            end_time = time.time()
+            print("m0: " + messages[str(hash_bits)])
+            print("m1: " + str(j))
+            print("hash0: " + str(hash_bits))
+            print("hash1: " + str(hash_bits))
+            print("COLLISION FOUND!")
+            print("Elapsed time: " + str(end_time - start_time) + " seconds\n")
+            return
+        else:
+            messages[str(hash_bits)] = str(j)
 
     end_time = time.time()
     print("No collision found in " + str(end_time - start_time) + " seconds")
