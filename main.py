@@ -36,21 +36,21 @@ def task1_c(bits):
     # get start time
     start_time = time.time()
     # create the message dictionary
-    messages = message_gen(bits)
+    messages = {}
     # generate hash for each message in the dictionary
-    for key in messages.keys():
-        # assign hash to key in dictionary
-        messages[key] = c_helper(key, bits)
-
-    for key1 in messages.keys():
-        for key2 in messages.keys():
-            if messages[key1] == messages[key2] and key1 != key2:
-                # get collision time
+    for j in range(0, (2 ** bits) // 8):
+        # calculate the hash for str(j)
+        hash_bits = c_helper(str(j), bits)
+        messages[str(j)] = hash_bits
+        for key in messages.keys():
+            # check to see if the same hash has been found for another value
+            if messages[key] == hash_bits and key != str(j):
+                # found a match!
                 end_time = time.time()
-                print("m0: " + key1)
-                print("m1: " + key2)
-                print("hash0: " + str(messages[key1]))
-                print("hash1: " + str(messages[key2]))
+                print("m0: " + key)
+                print("m1: " + str(j))
+                print("hash0: " + str(messages[key]))
+                print("hash1: " + str(messages[str(j)]))
                 print("COLLISION FOUND!")
                 print("Elapsed time: " + str(end_time - start_time) + " seconds\n")
                 return
@@ -76,7 +76,6 @@ def message_gen(bits):
     return dict
 
 
-
 if __name__ == '__main__':
     print("---------------------------- Task 1 ----------------------------")
     print("-- a --")
@@ -89,5 +88,7 @@ if __name__ == '__main__':
     for i in range(8, 51, 2):
         print(str(i) + " bit hash truncation...")
         task1_c(i)
-    print("\nDone with task 1c!")
+    print("\nDone with task 1c!\n")
+    print("---------------------------- Task 2 ----------------------------")
+
 
