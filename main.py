@@ -1,4 +1,6 @@
 import hashlib
+import bcrypt
+from nltk.corpus import words
 from Crypto.Hash import SHA256
 from Crypto.Cipher import AES
 from Crypto import Random
@@ -12,6 +14,9 @@ import os
 import random
 import time
 
+# Import and download froms from nltk
+import nltk
+nltk.download('words')
 
 def task1_a(input):
     print("Input text: " + input)
@@ -73,6 +78,35 @@ def message_gen(bits):
         dict[str(i)] = 0
     return dict
 
+def task2(bcrypt_hash):
+    # Split the string by $ to get an array of elements
+    parts = bcrypt_hash.split('$')
+
+    # Extract the parts
+    version = parts[1]
+    cost_factor = parts[2]
+    salt = parts[3][:22]  # 22 chars for the salt
+    real_hash = '$'.join(['', version, cost_factor, parts[3]])
+
+    # Generate a wordlist that contains words between 6 and 10 characters long
+    wordlist = [word for word in words.words() if 6 <= len(word) <= 10]
+
+    # Hash each word and check against the provided hash
+    for word in wordlist:
+        start_time = time.time()
+        # Use the correct format for bcrypt hash verification
+        hashed_word = bcrypt.hashpw(word.encode('utf-8'), real_hash.encode('utf-8'))
+        elapsed_time = time.time() - start_time
+        if hashed_word.decode('utf-8') == bcrypt_hash:
+            return word, elapsed_time
+
+    return None, None
+
+
+
+
+
+
 
 if __name__ == '__main__':
     print("---------------------------- Task 1 ----------------------------")
@@ -87,6 +121,19 @@ if __name__ == '__main__':
         print(str(i) + " bit hash truncation...")
         task1_c(i)
     print("\nDone with task 1c!\n")
+
     print("---------------------------- Task 2 ----------------------------")
+    bycrypt_hash = "$2b$12$J9FW66ZdPI2nrIMcOxFYI.qx268uZn.ajhymLP/YHaAsfBGP3Fnmq"
+    password, elapsed_time = task2(bycrypt_hash)
+    if password:
+        print("Password: " + password)
+        print("Elapsed time: " + str(elapsed_time) + " seconds\n")
+    else:
+        print("Password could not be found.")
+
+
+
+
+
 
 
