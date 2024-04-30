@@ -109,31 +109,28 @@ def task2(bcrypt_hash):
 
 
 if __name__ == '__main__':
-    print("---------------------------- Task 1 ----------------------------")
-    print("-- a --")
-    task1_a("Hello there")
-    print("\n-- b --")
-    task1_b("1", "2")
-    task1_b("a", "b")
-    task1_b("hello", "hellp")
-    print("\n-- c --")
-    for i in range(8, 51, 2):
-        print(str(i) + " bit hash truncation...")
-        task1_c(i)
-    print("\nDone with task 1c!\n")
+    t1 = input("Run Task 1? (y/n): ")
+    if t1 == 'y':
+        print("---------------------------- Task 1 ----------------------------")
+        print("-- a --")
+        task1_a("Hello there")
+        print("\n-- b --")
+        task1_b("1", "2")
+        task1_b("a", "b")
+        task1_b("hello", "hellp")
+        print("\n-- c --")
+        for i in range(8, 51, 2):
+            print(str(i) + " bit hash truncation...")
+            task1_c(i)
+        print("\nDone with task 1c!\n")
 
-    print("---------------------------- Task 2 ----------------------------")
-    bycrypt_hash = "$2b$12$J9FW66ZdPI2nrIMcOxFYI.qx268uZn.ajhymLP/YHaAsfBGP3Fnmq"
-    password, elapsed_time = task2(bycrypt_hash)
-    if password:
-        print("Password: " + password)
-        print("Elapsed time: " + str(elapsed_time) + " seconds\n")
-    else:
-        print("Password could not be found.")
-
-
-
-
-
-
-
+    t2 = input("Run Task 2? (y/n): ")
+    if t2 == 'y':
+        print("---------------------------- Task 2 ----------------------------")
+        bycrypt_hash = "$2b$12$J9FW66ZdPI2nrIMcOxFYI.qx268uZn.ajhymLP/YHaAsfBGP3Fnmq"
+        password, elapsed_time = task2(bycrypt_hash)
+        if password:
+            print("Password: " + password)
+            print("Elapsed time: " + str(elapsed_time) + " seconds\n")
+        else:
+            print("Password could not be found.")
