@@ -68,6 +68,7 @@ def message_gen(bits):
     return dict
 
 def task2(bcrypt_hash):
+    start_time = time.time()
     # Split the string by $ to get an array of elements
     parts = bcrypt_hash.split('$')
 
@@ -83,18 +84,18 @@ def task2(bcrypt_hash):
 
     # Hash each word and check against the provided hash
     for word in wordlist:
-        start_time = time.time()
         # Use the correct format for bcrypt hash verification
         hashed_word = bcrypt.hashpw(word.encode('utf-8'), real_hash.encode('utf-8'))
-        elapsed_time = time.time() - start_time
+        elapsed_time2 = time.time() - start_time
         if hashed_word.decode('utf-8') == bcrypt_hash:
-            return word, elapsed_time
+            return word, elapsed_time2
 
     return None, None
 
 
 if __name__ == '__main__':
-    t1 = input("Run Task 1? (y/n): ")
+    #t1 = input("Run Task 1? (y/n): ")
+    t1 = 'n'  # temp while testing task 2
     if t1 == 'y':
         print("---------------------------- Task 1 ----------------------------")
         print("-- a --")
@@ -109,7 +110,8 @@ if __name__ == '__main__':
             task1_c(i)
         print("\nDone with task 1c!\n")
 
-    t2 = input("Run Task 2? (y/n): ")
+    #t2 = input("Run Task 2? (y/n): ")
+    t2 = 'y'  # temp while testing task 2
     if t2 == 'y':
         print("---------------------------- Task 2 ----------------------------")
         bcrypt_hash = "$2b$08$J9FW66ZdPI2nrIMcOxFYI.q2PW6mqALUl2/uFvV9OFNPmHGNPa6YC"
