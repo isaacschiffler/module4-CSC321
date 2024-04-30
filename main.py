@@ -1,17 +1,6 @@
 import hashlib
 import bcrypt
 from nltk.corpus import words
-from Crypto.Hash import SHA256
-from Crypto.Cipher import AES
-from Crypto import Random
-from Crypto.Util.Padding import pad
-from Crypto.Cipher import AES
-from Crypto.Random import get_random_bytes
-from Crypto.Util.Padding import unpad
-from urllib.parse import quote
-from Crypto.Util import number
-import os
-import random
 import time
 
 # Import and download froms from nltk
@@ -86,7 +75,8 @@ def task2(bcrypt_hash):
     version = parts[1]
     cost_factor = parts[2]
     salt = parts[3][:22]  # 22 chars for the salt
-    real_hash = '$'.join(['', version, cost_factor, parts[3]])
+    real_hash = '$'.join(['', version, cost_factor, salt])
+    print(real_hash)
 
     # Generate a wordlist that contains words between 6 and 10 characters long
     wordlist = [word for word in words.words() if 6 <= len(word) <= 10]
@@ -101,11 +91,6 @@ def task2(bcrypt_hash):
             return word, elapsed_time
 
     return None, None
-
-
-
-
-
 
 
 if __name__ == '__main__':
@@ -127,8 +112,8 @@ if __name__ == '__main__':
     t2 = input("Run Task 2? (y/n): ")
     if t2 == 'y':
         print("---------------------------- Task 2 ----------------------------")
-        bycrypt_hash = "$2b$12$J9FW66ZdPI2nrIMcOxFYI.qx268uZn.ajhymLP/YHaAsfBGP3Fnmq"
-        password, elapsed_time = task2(bycrypt_hash)
+        bcrypt_hash = "$2b$08$J9FW66ZdPI2nrIMcOxFYI.q2PW6mqALUl2/uFvV9OFNPmHGNPa6YC"
+        password, elapsed_time = task2(bcrypt_hash)
         if password:
             print("Password: " + password)
             print("Elapsed time: " + str(elapsed_time) + " seconds\n")
