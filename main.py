@@ -114,7 +114,7 @@ if __name__ == '__main__':
     t2 = 'y'  # temp while testing task 2
     if t2 == 'y':
         print("---------------------------- Task 2 ----------------------------")
-        bcrypt_hash = "$2b$10$xGKjb94iwmlth954hEaw3O3YmtDO/mEFLIO0a0xLK1vL79LA73Gom"
+        bcrypt_hash = "$2b$10$xGKjb94iwmlth954hEaw3OcXR2H2PRHCgo98mjS11UIrVZLKxyABK"
         password, elapsed_time = task2(bcrypt_hash)
         if password:
             print("Password: " + password)
