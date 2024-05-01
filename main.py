@@ -8,6 +8,7 @@ import nltk
 nltk.download('words')
 
 def task1_a(input):
+    # print hex digest of a hash of given input
     print("Input text: " + input)
     input_bytes = input.encode('utf-8')
     hash = hashlib.sha256(input_bytes).hexdigest()
@@ -16,6 +17,7 @@ def task1_a(input):
 
 
 def task1_b(str1, str2):
+    # compare hashes of str1 and str2; Hamming Distance of 1 in this task
     print("Hash " + str1 + " vs. " + str2)
     input_bytes = str1.encode('utf-8')
     hash1 = hashlib.sha256(input_bytes).hexdigest()
@@ -36,6 +38,7 @@ def task1_c(bits):
         # calculate the hash for str(j)
         hash_bits = c_helper(str(j), bits)
         if str(hash_bits) in messages:
+            # found a collision!
             end_time = time.time()
             print("m0: " + messages[str(hash_bits)])
             print("m1: " + str(j))
@@ -60,12 +63,6 @@ def c_helper(input, size: int):
     hash_trunc = binary_hash[:size] # get up to [size] bits
     return hash_trunc
 
-
-def message_gen(bits):
-    dict = {}
-    for i in range(0, (2 ** bits) // 8):
-        dict[str(i)] = 0
-    return dict
 
 def task2(bcrypt_hash):
     start_time = time.time()
@@ -101,6 +98,7 @@ if __name__ == '__main__':
         print("-- a --")
         task1_a("Hello there")
         print("\n-- b --")
+        # each have Hamming Distance of 1
         task1_b("1", "2")
         task1_b("a", "b")
         task1_b("hello", "hellp")
@@ -114,7 +112,7 @@ if __name__ == '__main__':
     t2 = 'y'  # temp while testing task 2
     if t2 == 'y':
         print("---------------------------- Task 2 ----------------------------")
-        bcrypt_hash = "$2b$10$xGKjb94iwmlth954hEaw3OcXR2H2PRHCgo98mjS11UIrVZLKxyABK"
+        bcrypt_hash = "$2b$12$rMeWZtAVcGHLEiDNeKCz8Ose2KNe821.l2h5eLffzWoP01DlQb72O"
         password, elapsed_time = task2(bcrypt_hash)
         if password:
             print("Password: " + password)
